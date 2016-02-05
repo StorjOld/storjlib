@@ -25,8 +25,9 @@ script:
   - pep8 storjterms
   - pep8 tests
   - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjterms_compatibility.sh)"
-  - travis_wait coverage run --source="storjterms" setup.py test
-  #- coverage report --fail-under=80
+  - travis_wait python setup.py test
+  #- travis_wait coverage run --source="storjterms" setup.py test
+  - coverage report
 
 after_success:
   - coveralls
