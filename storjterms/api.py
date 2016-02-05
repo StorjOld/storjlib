@@ -1,5 +1,5 @@
 import apigen
-from . contract import is_valid
+# from . contract import is_valid
 from . version import __version__  # NOQA
 
 
@@ -7,7 +7,8 @@ class Storjterms(apigen.Definition):
 
     @apigen.command()
     def contract_is_valid(self, contract):
-        return is_valid(contract)
+        return False
+        # return is_valid(contract)
 
     # @apigen.command()
     # def contract_is_complete(self, contract):
