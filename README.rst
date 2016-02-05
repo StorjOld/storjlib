@@ -31,14 +31,14 @@ Install
 ::
 
     $ sudo apt-get install python-dev gcc
-    $ sudo pip install storjnode
-    $ storjnode --help
+    $ sudo pip install storjterms
+    $ storjterms --help
 
 
 Update
 
 ::
 
-    $ sudo pip install storjnode --upgrade
-    $ storjnode --help
+    $ sudo pip install storjterms --upgrade
+    $ storjterms --help
 

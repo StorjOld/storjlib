@@ -11,6 +11,7 @@ else
   WHEEL_INSTALL_ARGS := --use-wheel --no-index --find-links=$(WHEEL_DIR)
 endif
 export PYCOIN_NATIVE=openssl
+export PYTHON=$(PY)
 
 
 help:
@@ -74,7 +75,6 @@ view_readme: setup
 
 test: setup
 	$(PEP8) storjterms
-	$(PEP8) examples
 	$(PEP8) tests
 	bash start_rpc.sh
 	bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjterms_compatibility.sh)"

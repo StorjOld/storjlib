@@ -15,18 +15,24 @@ env:
 install:
   - pip install -r requirements.txt
   - pip install -r test_requirements.txt
-  - pip install meliae
   - python setup.py install
+  - screen -dmS storjterms_rpc_server;
+  - sleep 1
+  - screen -S storjterms_rpc_server -X stuff $'python -m storjterms.api startserver --hostname="127.0.0.1" --port=7000 &> storjterms_rpc_server.log\n'
+
 
 script:
   - pep8 storjterms
-  - pep8 examples
   - pep8 tests
+  - bash start_rpc.sh
+  - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjterms_compatibility.sh)"
+  - bash stop_rpc.sh
   - travis_wait coverage run --source="storjterms" setup.py test
   - coverage report --fail-under=90
 
 after_success:
   - coveralls
+  - screen -S storjterms_rpc_server -X kill
 
 notifications:
   slack: storjcommunity:TZfUO9ycY8R9UYwztWZTo0jk
