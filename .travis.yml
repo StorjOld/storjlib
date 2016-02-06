@@ -28,8 +28,10 @@ script:
   - travis_wait coverage run --source="storjlib" setup.py test
   - coverage report --fail-under=80
 
+
 after_success:
   - coveralls
+
 
 notifications:
   slack: storjcommunity:TZfUO9ycY8R9UYwztWZTo0jk

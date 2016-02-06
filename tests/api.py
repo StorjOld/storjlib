@@ -19,6 +19,7 @@ EXAMPLE_CONTRACT = {
     "store_end": 3000000000,
     "audit_algorithm": "default",
     "audit_count": 10,
+    "audit_merkle_root": None,
     "heartbeat_algorithm": "default",
     "heartbeat_count": 3600,
     "heartbeat_coverage": 12,
