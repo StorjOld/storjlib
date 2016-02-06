@@ -21,7 +21,7 @@ bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/mast
 
 # stop server
 screen -S rpc_server -X stuff "^C"
-sleep 5
+sleep 10
 
 # report coverage
 $COVERAGE report --fail-under=95
