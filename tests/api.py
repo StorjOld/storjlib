@@ -34,7 +34,6 @@ EXAMPLE_CONTRACT = {
 }
 
 
-@unittest.skip("test")
 class TestValidate(unittest.TestCase):
 
     def test_example(self):

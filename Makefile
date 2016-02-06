@@ -78,13 +78,7 @@ rpcserver: setup
 
 
 test: setup
-	$(PEP8) storjlib
-	$(PEP8) tests
-	bash start_rpc.sh
-	bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjlib_compatibility.sh)"
-	bash stop_rpc.sh
-	$(COVERAGE) run --source="storjlib" setup.py test
-	$(COVERAGE) report --fail-under=80
+	bash test.sh
 
 
 publish: test
