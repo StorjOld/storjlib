@@ -5,17 +5,17 @@
 from setuptools import setup, find_packages
 
 
-exec(open('storjterms/version.py').read())  # load __version__
+exec(open('storjlib/version.py').read())  # load __version__
 
 
 setup(
-    name='storjterms',
-    description="Storjterms reference implementation.",
+    name='storjlib',
+    description="Storjlib reference implementation.",
     long_description=open("README.rst").read(),
     keywords="storj, reference, protocol, DHT",
     url='http://storj.io',
     author='Fabian Barkhau',
-    author_email='shawn+storjterms@storj.io',
+    author_email='shawn+storjlib@storj.io',
     license="MIT",
     version=__version__,  # NOQA
     test_suite="tests",

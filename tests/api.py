@@ -1,5 +1,5 @@
 import unittest
-import storjterms
+import storjlib
 
 
 EXAMPLE_CONTRACT = {
@@ -36,7 +36,7 @@ EXAMPLE_CONTRACT = {
 class TestIsValid(unittest.TestCase):
 
     def test_example(self):
-        api = storjterms.api.Storjterms()
+        api = storjlib.api.Storjlib()
         self.assertTrue(api.contract_is_valid(EXAMPLE_CONTRACT))
 
 

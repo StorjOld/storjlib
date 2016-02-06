@@ -3,7 +3,7 @@ from . contract import is_valid
 from . version import __version__  # NOQA
 
 
-class Storjterms(apigen.Definition):
+class Storjlib(apigen.Definition):
 
     @apigen.command()
     def contract_is_valid(self, contract):
@@ -19,4 +19,4 @@ class Storjterms(apigen.Definition):
 
 
 if __name__ == "__main__":
-    apigen.run(Storjterms)
+    apigen.run(Storjlib)

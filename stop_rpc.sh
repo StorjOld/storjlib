@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-screen -S storjterms_rpc_server -X kill
+screen -S storjlib_rpc_server -X kill

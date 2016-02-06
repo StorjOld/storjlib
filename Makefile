@@ -73,13 +73,17 @@ view_readme: setup
 	env/bin/restview README.rst
 
 
+rpcserver: setup
+	env/bin/python -m storjlib.api startserver --hostname="127.0.0.1" --port=7000
+
+
 test: setup
-	$(PEP8) storjterms
+	$(PEP8) storjlib
 	$(PEP8) tests
 	bash start_rpc.sh
-	bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjterms_compatibility.sh)"
+	bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjlib_compatibility.sh)"
 	bash stop_rpc.sh
-	$(COVERAGE) run --source="storjterms" setup.py test
+	$(COVERAGE) run --source="storjlib" setup.py test
 	$(COVERAGE) report --fail-under=80
 
 

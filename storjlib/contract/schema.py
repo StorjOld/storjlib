@@ -1,10 +1,12 @@
-CONTRACT_SCHEMA = {
+import json
+
+CONTRACT_SCHEMA = json.loads("""
+{
     "type": "object",
     "properties": {
         "type": {
             "enum": [
-                ("56ce3e837f575827cb5a94e2b609756"
-                 "a48fa4a3882f5e762b262af31f432878d")
+            "56ce3e837f575827cb5a94e2b609756a48fa4a3882f5e762b262af31f432878d"
             ]
         },
         "renter_id": {
@@ -66,6 +68,10 @@ CONTRACT_SCHEMA = {
             "type": ["integer", "null"],
             "minimum": 0
         },
+        "audit_merkle_root": {
+            "type": ["string", "null"],
+            "pattern": "^[0-9a-f]{64,64}$"
+        },
         "heartbeat_algorithm": {
             "type": ["string", "null"]
         },
@@ -105,7 +111,7 @@ CONTRACT_SCHEMA = {
             "minimum": 0
         }
     },
-    "additionalProperties": False,
+    "additionalProperties": false,
     "required": [
         "type",
         "renter_id",
@@ -123,6 +129,7 @@ CONTRACT_SCHEMA = {
         "store_end",
         "audit_algorithm",
         "audit_count",
+        "audit_merkle_root",
         "heartbeat_algorithm",
         "heartbeat_count",
         "heartbeat_coverage",
@@ -136,3 +143,4 @@ CONTRACT_SCHEMA = {
         "payment_interval"
     ]
 }
+""")
