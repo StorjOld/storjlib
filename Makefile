@@ -74,11 +74,12 @@ view_readme: setup
 
 
 rpcserver: setup
-	env/bin/python -m storjlib.api startserver --hostname="127.0.0.1" --port=7000
+	$(PY) -m storjlib.api startserver --hostname="127.0.0.1" --port=7000
 
 
 test: setup
 	bash test.sh
+	$(COVERAGE) report --fail-under=95
 
 
 publish: test
