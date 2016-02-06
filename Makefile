@@ -11,7 +11,6 @@ else
   WHEEL_INSTALL_ARGS := --use-wheel --no-index --find-links=$(WHEEL_DIR)
 endif
 export PYCOIN_NATIVE=openssl
-export PYTHON=$(PY)
 export VIRTUALENV_PATH=env/bin/
 
 

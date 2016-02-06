@@ -3,9 +3,12 @@
 # exit immediately if a simple command exits with a nonzero exit value
 set -e
 
+export PYCOIN_NATIVE=openssl
 PEP8=${VIRTUALENV_PATH}pep8
-PYTHON=${VIRTUALENV_PATH}python
 COVERAGE=${VIRTUALENV_PATH}coverage
+
+echo $PEP8
+echo $COVERAGE
 
 # ensure pep8
 $PEP8 storjlib
@@ -18,7 +21,7 @@ bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/mast
 
 # stop server
 screen -S rpc_server -X stuff "^C"
-sleep 1
+sleep 5
 
 # report coverage
 $COVERAGE report --fail-under=95
