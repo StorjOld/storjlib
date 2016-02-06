@@ -27,8 +27,10 @@ script:
   - pep8 tests
   - screen -dmS rpc_server;
   - screen -S rpc_server -X stuff $'coverage run -m storjlib.api startserver --hostname="127.0.0.1" --port=7000\n'
+  - sleep 5
   - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjlib_compatibility.sh)"
-  - screen -S rpc_server -X kill
+  - screen -S rpc_server -X kill -SIGINT
+  - sleep 5
   - coverage report
   #- coverage report --fail-under=90
 
