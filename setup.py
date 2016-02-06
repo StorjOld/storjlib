@@ -18,7 +18,6 @@ setup(
     author_email='shawn+storjlib@storj.io',
     license="MIT",
     version=__version__,  # NOQA
-    test_suite="tests",
     dependency_links=[],
     install_requires=open("requirements.txt").readlines(),
     tests_require=open("test_requirements.txt").readlines(),

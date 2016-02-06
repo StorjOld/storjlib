@@ -12,6 +12,7 @@ else
 endif
 export PYCOIN_NATIVE=openssl
 export PYTHON=$(PY)
+export VIRTUALENV_PATH=env/bin/
 
 
 help:

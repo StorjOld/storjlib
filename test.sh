@@ -3,13 +3,15 @@
 # exit immediately if a simple command exits with a nonzero exit value
 set -e
 
+PEP8=${VIRTUALENV_PATH}pep8
+PYTHON=${VIRTUALENV_PATH}python
+COVERAGE=${VIRTUALENV_PATH}coverage
+
 # ensure pep8
-env/bin/pep8 storjlib
-env/bin/pep8 tests
+$PEP8 storjlib
 
 # start server
-screen -dmS rpc_server;
-screen -S rpc_server -X stuff $'env/bin/coverage run --source="storjlib" -m storjlib.api startserver --hostname="127.0.0.1" --port=7000\n'
+screen -S rpc_server -d -m $COVERAGE run --source=storjlib -m storjlib.api startserver --hostname=127.0.0.1 --port=7000
 
 # run compatibility tests
 bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjlib_compatibility.sh)"
@@ -17,10 +19,6 @@ bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/mast
 # stop server
 screen -S rpc_server -X stuff "^C"
 sleep 1
-screen -S rpc_server -X kill
-
-# run storjlib tests
-env/bin/coverage run --source="storjlib" setup.py test
 
 # report coverage
-env/bin/coverage report
+$COVERAGE report --fail-under=95

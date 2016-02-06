@@ -23,16 +23,7 @@ install:
 
 
 script:
-  - pep8 storjlib
-  - pep8 tests
-  - screen -dmS rpc_server;
-  - screen -S rpc_server -X stuff $'coverage run --source="storjlib" -m storjlib.api startserver --hostname="127.0.0.1" --port=7000\n'
-  - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjlib_compatibility.sh)"
-  - screen -S rpc_server -X stuff "^C"
-  - sleep 1
-  - screen -S rpc_server -X kill
-  - coverage run --source="storjlib" setup.py test
-  - coverage report --fail-under=95
+  - bash test.sh
 
 
 after_success:
