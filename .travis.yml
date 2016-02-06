@@ -1,31 +1,35 @@
 language: python
 python:
   - "2.7"
-#  - "pypy"
-#  - "3.3"
-#  - "3.4"
+
 
 os:
   - linux
-#  - osx
+
 
 env:                                                                           
   - PYCOIN_NATIVE=openssl
 
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq screen
 
 
 install:
   - pip install -r requirements.txt
   - pip install -r test_requirements.txt
   - python setup.py install
-  - python -m storjlib.api startserver --hostname="127.0.0.1" --port=7000 < /dev/null &>/dev/null &
 
 
 script:
   - pep8 storjlib
   - pep8 tests
+  - screen -dmS rpc_server;
+  - screen -S rpc_server -X stuff $'coverage run -m storjlib.api startserver --hostname="127.0.0.1" --port=7000\n'
   - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjlib_compatibility.sh)"
   - travis_wait coverage run --source="storjlib" setup.py test
+  - screen -S rpc_server -X kill
   - coverage report --fail-under=80
 
 
