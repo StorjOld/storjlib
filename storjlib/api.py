@@ -1,13 +1,13 @@
 import apigen
-from . contract import is_valid
+from . contract import validate
 from . version import __version__  # NOQA
 
 
 class Storjlib(apigen.Definition):
 
     @apigen.command()
-    def contract_is_valid(self, contract):
-        return is_valid(contract)
+    def contract_validate(self, contract):
+        return validate(contract)
 
     # @apigen.command()
     # def contract_is_complete(self, contract):

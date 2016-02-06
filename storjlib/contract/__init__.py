@@ -2,7 +2,7 @@ import jsonschema
 from . schema import CONTRACT_SCHEMA  # NOQA
 
 
-def is_valid(contract):
+def validate(contract):
     try:
         jsonschema.validate(contract, CONTRACT_SCHEMA)
         return True
