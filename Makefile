@@ -79,7 +79,6 @@ rpcserver: setup
 
 test: setup
 	bash test.sh
-	$(COVERAGE) report --fail-under=95
 
 
 publish: test

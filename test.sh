@@ -14,14 +14,15 @@ echo $COVERAGE
 $PEP8 storjlib
 
 # start server
-screen -S rpc_server -d -m $COVERAGE run --source=storjlib -m storjlib.api startserver --hostname=127.0.0.1 --port=7000
+$COVERAGE run --source=storjlib -m storjlib.api startserver --hostname=127.0.0.1 --port=7000 & 
+PID=$!
 
 # run compatibility tests
 bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjlib_compatibility.sh)"
 
 # stop server
-screen -S rpc_server -X stuff "^C"
+kill -INT $PID
 
-# report coverage FIXME doesnt work on travis
-# sleep 10
-# $COVERAGE report --fail-under=95
+# report coverage
+sleep 1
+$COVERAGE report --fail-under=95
