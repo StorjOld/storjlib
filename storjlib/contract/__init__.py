@@ -1,5 +1,5 @@
 import jsonschema
-from . schema import CONTRACT_SCHEMA  # NOQA
+from . schema import CONTRACT_SCHEMA
 
 
 def validate(contract):
