@@ -73,7 +73,7 @@ view_readme: setup
 	env/bin/restview README.rst
 
 
-rpcserver: setup
+rpcserver: install
 	$(PY) -m storjlib.api startserver --hostname="127.0.0.1" --port=7000
 
 
