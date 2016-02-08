@@ -1,9 +1,11 @@
-import re
+import binascii
 import hashlib
+import storjlib
+from pycoin.encoding import ripemd160
 
 
-def valid_id(shard_id):
-    return bool(re.match(r"^[0-9abcdef]{64}$", shard_id))
+def valid_id(shardid):
+    return storjlib.util.is_hex_hash(shardid)
 
 
 def get_size(shard):
@@ -18,14 +20,14 @@ def get_size(shard):
     return shard.tell()
 
 
-def get_hash(shard, salt=None, limit=None):
+def get_hash_bin(shard, salt=None, limit=None):
     """Get the hash of the shard.
 
     Args:
         shard: A file like object representing the shard.
         salt: Optional salt to add as a prefix before hashing.
 
-    Returns: Hex digetst of sha256(salt + shard).
+    Returns: Hex digetst of ripemd160(sha256(salt + shard)).
     """
     shard.seek(0)
     hasher = hashlib.sha256()
@@ -56,12 +58,25 @@ def get_hash(shard, salt=None, limit=None):
             remaining -= chunk_size
 
     shard.seek(0)
-    return hasher.hexdigest()
+    return ripemd160(hasher.digest()).digest()
+
+
+def get_hash_hex(shard, hex_salt=None, limit=None):
+    """Get the hash of the shard.
+
+    Args:
+        shard: A file like object representing the shard.
+        hex_salt: Optional hex encoded salt to add as a prefix before hashing.
+
+    Returns: Hex digetst of ripemd160(sha256(salt + shard)).
+    """
+    salt = binascii.unhexlify(hex_salt) if hex_salt is not None else None
+    return binascii.hexlify(get_hash_bin(shard, salt=salt, limit=limit))
 
 
 def get_id(shard):
-    """Returns the sha256 sum of the shard"""
-    return get_hash(shard)
+    """Returns the hex encoded hash of the shard"""
+    return get_hash_hex(shard)
 
 
 def copy(src_shard, dest_fobj):

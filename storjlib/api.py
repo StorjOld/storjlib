@@ -43,7 +43,9 @@ class Storjlib(apigen.Definition):
 
     @apigen.command()
     def audit_perform(self, shardid, leaves, challenge):
-        raise NotImplementedError()
+        # TODO validate input
+        shard = storjlib.store.manager.open(self._cfg["storage"], shardid)
+        return storjlib.audit.perform(shard, leaves, challenge)
 
     @apigen.command()
     def audit_prepare(self, shardid, challenges):
@@ -51,9 +53,15 @@ class Storjlib(apigen.Definition):
 
     @apigen.command()
     def store_add(self, shard_path):
+        # TODO validate input
         shard = open(storjlib.util.full_path(shard_path), "rb")
         storjlib.store.manager.add(self._cfg["storage"], shard)
         return storjlib.store.shard.get_id(shard)
+
+    @apigen.command()
+    def store_remove(self, shardid):
+        # TODO validate input
+        storjlib.store.manager.remove(self._cfg["storage"], shardid)
 
 
 if __name__ == "__main__":

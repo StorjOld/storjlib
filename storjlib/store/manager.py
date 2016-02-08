@@ -200,6 +200,7 @@ def add(store_config, shard):  # FIXME require config instead
         shard_path = _get_shard_path(store_path, shardid, use_folder_tree,
                                      create_needed_folders=True)
         storjlib.store.shard.save(shard, shard_path)
+        _log.info("Added shard {0} to store.".format(shardid))
         return shard_path
 
     raise MemoryError("Not enough space to add {0}!".format(shardid))
@@ -226,6 +227,7 @@ def remove(store_config, shardid):  # FIXME require config instead
     """
     shard_path = find(store_config, shardid)
     if shard_path is not None:
+        _log.info("Removing shard {0} from store.".format(shardid))
         return os.remove(shard_path)
 
 
