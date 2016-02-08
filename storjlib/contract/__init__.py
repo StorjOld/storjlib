@@ -16,10 +16,10 @@ def validate(contract):
 
 def _is_filled(contract, exclude=None):
     if exclude is not None:
-        assert(exclude in contract.keys())
+        for key in exclude:
+            assert(key in contract.keys())
     for key, value in contract.items():
         if exclude is not None and key in exclude:
-            assert(contract[key] is None)  # excluded values must be None
             continue
         if value is None:
             return False
