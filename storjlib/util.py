@@ -42,9 +42,19 @@ def address_to_nodeid(address):
     return a2b_hashed_base58(address)[1:]
 
 
-def nodeid_to_address(node_id):
+def address_to_hexnodeid(address):
+    """Convert a bitcoin address to a hex node id."""
+    return binascii.hexlify(address_to_nodeid(address))
+
+
+def nodeid_to_address(nodeid):
     """Convert a node id to a bitcoin address."""
-    return b2a_hashed_base58(b'\0' + node_id)
+    return b2a_hashed_base58(b'\0' + nodeid)
+
+
+def hexnodeid_to_address(hexnodeid):
+    """Convert a hex node id to a bitcoin address."""
+    return nodeid_to_address(binascii.unhexlify(hexnodeid))
 
 
 def chunks(items, size):

@@ -21,14 +21,27 @@ class Storjlib(apigen.Definition):
 
     @apigen.command()
     def contract_sign(self, contract, key):
-        raise NotImplementedError()
+        # TODO validate input
+        return storjlib.contract.sign(contract, key)
 
     @apigen.command()
     def contract_is_complete(self, contract):
-        raise NotImplementedError()
+        # TODO validate input
+        return storjlib.contract.is_complete(contract)
 
     @apigen.command()
     def audit_validate(self, proof, root, challengenum, leaves):
+        """ Validate an audit proof is for a given root and challange.
+
+        Args:
+            proof: The proof to be validated.
+            root: The merkle root the proof must be for.
+            challengenum: The leaf the proof must be for.
+            leaves: All audit leaves (to ensure proof is not for other leaves).
+
+        Retruns:
+            True if the proof is correct.
+        """
 
         # validate input
         assert(isinstance(proof, list))
@@ -49,6 +62,14 @@ class Storjlib(apigen.Definition):
 
     @apigen.command()
     def audit_prepare(self, shardid, challenges):
+        raise NotImplementedError()
+
+    @apigen.command()
+    def store_import(self, paths):
+        raise NotImplementedError()
+
+    @apigen.command()
+    def store_export(self, shardid, path):
         raise NotImplementedError()
 
     @apigen.command()

@@ -3,6 +3,17 @@ from storjlib import store
 
 
 def validate(proof, root, challengenum, leaves):
+    """ Validate an audit proof is for a given root and challange.
+
+    Args:
+        proof: The proof to be validated.
+        root: The merkle root the proof must be for.
+        challengenum: The leaf the proof must be for.
+        leaves: All audit leaves (to ensure proof is not for other leaves).
+
+    Retruns:
+        True if the proof is correct.
+    """
     width = util.next_power_of_two(len(leaves))
     depth = util.perfect_binary_tree_depth(width)
     leaf = leaves[challengenum]
@@ -41,7 +52,7 @@ def trim(proof, index):
             proof_next.append(util.hash_hex(branch[0] + branch[1]))
         else:
             proof_next.append(branch)
-    return trim(proof_next, index / 2)
+    return trim(proof_next, index / 2)  # FIXME check it floors division!!!
 
 
 def collapse(proof, leaf, depth):
