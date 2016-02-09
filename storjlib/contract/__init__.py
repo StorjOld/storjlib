@@ -57,17 +57,18 @@ def sign(contract, key):
     hexnodeid = binascii.hexlify(util.address_to_nodeid(btc_address))
     assert(hexnodeid in [contract["farmer_id"], contract["renter_id"]])
 
-    # sign contract
-    message = _generate_signature_message(contract)
-    signature = _btcapi.sign_unicode(wif, message)
-
-    # add signature to contract
+    # not already signed
     sigfield = None
     if contract["renter_id"] == hexnodeid:
         sigfield = "renter_signature"
     elif contract["farmer_id"] == hexnodeid:
         sigfield = "farmer_signature"
     assert(sigfield is not None)  # impossable state
+    assert(contract[sigfield] is None)  # not already signed
+
+    # sign contract
+    message = _generate_signature_message(contract)
+    signature = _btcapi.sign_unicode(wif, message)
     contract[sigfield] = signature
 
     return contract
