@@ -62,7 +62,9 @@ class Storjlib(apigen.Definition):
 
     @apigen.command()
     def audit_prepare(self, shardid, challenges):
-        raise NotImplementedError()
+        # TODO validate input
+        shard = storjlib.store.manager.open(self._cfg["storage"], shardid)
+        return storjlib.audit.prepare(shard, challenges)
 
     @apigen.command()
     def store_import(self, paths):

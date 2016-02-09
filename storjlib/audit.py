@@ -93,3 +93,12 @@ def collapse(proof, leaf, depth):
         hashr = proof[1]  # end of branch
 
     return util.hash_hex(hashl + hashr)
+
+
+def prepare(shard, challenges):
+    leaves = []
+    # very inefficient implementation
+    for challenge in challenges:
+        response = store.shard.get_hash_hex(shard, hex_salt=challenge)
+        leaves.append(util.hash_hex(response))
+    return leaves
