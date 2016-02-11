@@ -30,14 +30,14 @@ class Storjlib(apigen.Definition):
         return storjlib.contract.is_complete(contract)
 
     @apigen.command()
-    def audit_validate(self, proof, root, challengenum, leaves):
-        """ Validate an audit proof is for a given root and challange.
+    def challenge_validate(self, proof, root, challengenum, leaves):
+        """ Validate an audit/heartbeat proof is for a given root and challange.
 
         Args:
             proof: The proof to be validated.
             root: The merkle root the proof must be for.
             challengenum: The leaf the proof must be for.
-            leaves: All audit leaves (to ensure proof is not for other leaves).
+            leaves: All leaves (ensure proof not for other leaves).
 
         Retruns:
             True if the proof is correct.
@@ -52,19 +52,19 @@ class Storjlib(apigen.Definition):
         assert(isinstance(challengenum, six.integer_types))
         assert(0 <= challengenum < len(leaves))
 
-        return storjlib.audit.validate(proof, root, challengenum, leaves)
+        return storjlib.challenge.validate(proof, root, challengenum, leaves)
 
     @apigen.command()
-    def audit_perform(self, shardid, leaves, challenge):
+    def challenge_perform(self, shardid, leaves, challenge):
         # TODO validate input
         shard = storjlib.store.manager.open(self._cfg["storage"], shardid)
-        return storjlib.audit.perform(shard, leaves, challenge)
+        return storjlib.challenge.perform(shard, leaves, challenge)
 
     @apigen.command()
-    def audit_prepare(self, shardid, challenges):
+    def challenge_prepare(self, shardid, challenges):
         # TODO validate input
         shard = storjlib.store.manager.open(self._cfg["storage"], shardid)
-        return storjlib.audit.prepare(shard, challenges)
+        return storjlib.challenge.prepare(shard, challenges)
 
     @apigen.command()
     def store_import(self, paths):
