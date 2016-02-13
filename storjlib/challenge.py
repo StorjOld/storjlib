@@ -23,8 +23,9 @@ def validate(proof, root, challengenum, leaves):
         return False  # incorrect proof or proof format
 
 
-def perform(shard, leaves, challenge):
-    response = store.shard.get_hash_hex(shard, hex_salt=challenge)
+def perform(shard, leaves, challenge, size=0, offset=0):
+    response = store.shard.get_hash_hex(shard, hex_salt=challenge,
+                                        size=size, offset=offset)
     leaf = util.hash_hex(response)
     assert(leaf in leaves)
     challengenum = leaves.index(leaf)

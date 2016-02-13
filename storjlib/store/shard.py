@@ -1,6 +1,7 @@
 import binascii
 import hashlib
 import storjlib
+import partialhash
 from pycoin.encoding import ripemd160
 
 
@@ -20,7 +21,7 @@ def get_size(shard):
     return shard.tell()
 
 
-def get_hash_bin(shard, salt=None, limit=None):
+def get_hash_bin(shard, salt=b"", size=0, offset=0):
     """Get the hash of the shard.
 
     Args:
@@ -29,49 +30,29 @@ def get_hash_bin(shard, salt=None, limit=None):
 
     Returns: Hex digetst of ripemd160(sha256(salt + shard)).
     """
-    shard.seek(0)
-    hasher = hashlib.sha256()
-    if salt is not None:
-        hasher.update(salt)
-
-    # Don't read whole file into memory.
-    remaining = limit
-    max_chunk_size = 4096
-
-    def get_chunk_size(remaining, max_chunk_size):
-        if remaining is not None:
-            if remaining < max_chunk_size:
-                return remaining
-            else:
-                return max_chunk_size
-        else:
-            return max_chunk_size
-
-    while True:
-        chunk_size = get_chunk_size(remaining, max_chunk_size)
-        chunk = shard.read(chunk_size)
-        if chunk == b"":
-            break
-
-        hasher.update(chunk)
-        if remaining is not None:
-            remaining -= chunk_size
 
     shard.seek(0)
-    return ripemd160(hasher.digest()).digest()
+    digest = partialhash.compute(shard, offset=offset, length=size, seed=salt,
+                                 hash_algorithm=hashlib.sha256)
+
+    shard.seek(0)
+    return ripemd160(digest).digest()
 
 
-def get_hash_hex(shard, hex_salt=None, limit=None):
+def get_hash_hex(shard, hex_salt="", size=0, offset=0):
     """Get the hash of the shard.
 
     Args:
         shard: A file like object representing the shard.
         hex_salt: Optional hex encoded salt to add as a prefix before hashing.
+        size: TODO doc string
+        offset: TODO doc string
 
     Returns: Hex digetst of ripemd160(sha256(salt + shard)).
     """
-    salt = binascii.unhexlify(hex_salt) if hex_salt is not None else None
-    return binascii.hexlify(get_hash_bin(shard, salt=salt, limit=limit))
+    salt = binascii.unhexlify(hex_salt) if hex_salt else ""
+    return binascii.hexlify(get_hash_bin(shard, salt=salt,
+                                         size=size, offset=offset))
 
 
 def get_id(shard):

@@ -2,3 +2,4 @@ btctxstore >= 4.6.1
 jsonschema >= 2.5.1
 apigen >= 1.4.1
 psutil >= 3.4.2
+partialhash >= 1.1.3
