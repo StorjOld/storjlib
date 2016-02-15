@@ -97,13 +97,11 @@ def collapse(proof, leaf, depth):
 
 
 def prepare(shard, challenges):
-    leaves = []
     # very inefficient implementation
+    leaves = []
     for challenge in challenges:
-        seed = challenge["seed"]
-        # FIXME use size and offset
-        # size = challenge["size"]
-        # offset = challenge["offset"]
-        response = store.shard.get_hash_hex(shard, hex_salt=seed)
+        response = store.shard.get_hash_hex(shard, hex_salt=challenge["seed"],
+                                            size=challenge["size"],
+                                            offset=challenge["offset"])
         leaves.append(util.hash_hex(response))
     return leaves
