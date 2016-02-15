@@ -23,8 +23,8 @@ def validate(proof, root, challengenum, leaves):
         return False  # incorrect proof or proof format
 
 
-def perform(shard, leaves, challenge, size=0, offset=0):
-    response = store.shard.get_hash_hex(shard, hex_salt=challenge,
+def perform(shard, leaves, seed, size=0, offset=0):
+    response = store.shard.get_hash_hex(shard, hex_salt=seed,
                                         size=size, offset=offset)
     leaf = util.hash_hex(response)
     assert(leaf in leaves)
@@ -100,6 +100,10 @@ def prepare(shard, challenges):
     leaves = []
     # very inefficient implementation
     for challenge in challenges:
-        response = store.shard.get_hash_hex(shard, hex_salt=challenge)
+        seed = challenge["seed"]
+        # FIXME use size and offset
+        # size = challenge["size"]
+        # offset = challenge["offset"]
+        response = store.shard.get_hash_hex(shard, hex_salt=seed)
         leaves.append(util.hash_hex(response))
     return leaves

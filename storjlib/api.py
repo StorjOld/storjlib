@@ -58,8 +58,9 @@ class Storjlib(apigen.Definition):
     def challenge_perform(self, shardid, leaves, challenge, size=0, offset=0):
         # TODO validate input
         shard = storjlib.store.manager.open(self._cfg["storage"], shardid)
-        return storjlib.challenge.perform(shard, leaves, challenge,
-                                          size=size, offset=offset)
+        return storjlib.challenge.perform(shard, leaves, challenge["seed"],
+                                          size=challenge["size"],
+                                          offset=challenge["offset"])
 
     @apigen.command()
     def challenge_prepare(self, shardid, challenges):

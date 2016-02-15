@@ -34,7 +34,6 @@ def get_hash_bin(shard, salt=b"", size=0, offset=0):
     shard.seek(0)
     digest = partialhash.compute(shard, offset=offset, length=size, seed=salt,
                                  hash_algorithm=hashlib.sha256)
-
     shard.seek(0)
     return ripemd160(digest).digest()
 
